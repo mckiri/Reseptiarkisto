@@ -64,20 +64,7 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
     }
     
     public RaakaAine findOneByAnnosId(int annosId) throws SQLException {
-
-        try (Connection conn = database.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT RaakaAine.id, RaakaAine.nimi"
-                    + "FROM RaakaAine, Annos"
-                    + "WHERE RaakaAine.");
-            stmt.setInt(1, annosId);
-            ResultSet result = stmt.executeQuery();
-
-            while (result.next()) {
-                return new RaakaAine(result.getInt("id"), result.getString("nimi"));
-            }
-        }
-
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -94,6 +81,26 @@ public class RaakaAineDao implements Dao<RaakaAine, Integer> {
         stmt.executeUpdate();
         stmt.close();
         conn.close();
+    }
+
+    public List<RaakaAine> findAllViaKey(Integer annosId) throws SQLException {
+        List<RaakaAine> aineet = new ArrayList<>();
+        
+        try (Connection conn = database.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT RaakaAine.id, RaakaAine.nimi"
+                    + "FROM RaakaAine, AnnosRaakaAine, Annos\n"
+                    + "WHERE Annos.id=?"
+                    + "AND AnnosRaakaAine.raakaAine_id = RaakaAine.id\n"
+                    + "AND AnnosRaakaAine.annos_id = Annos.id");
+            stmt.setInt(1, annosId);
+            ResultSet result = stmt.executeQuery();
+
+            while (result.next()) {
+                aineet.add(new RaakaAine(result.getInt("id"), result.getString("nimi")));
+            }
+        }
+
+        return aineet;
     }
     
 }
