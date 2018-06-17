@@ -21,6 +21,11 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 public class Main{
     
     public static void main(String[] args) throws Exception {
+        
+        if (System.getenv("PORT") != null) {
+            Spark.port(Integer.valueOf(System.getenv("PORT")));
+        }
+        
         Database db = new Database("jdbc:sqlite:Reseptiarkisto.db");
     
         AnnosDao annosDao = new AnnosDao(db);
