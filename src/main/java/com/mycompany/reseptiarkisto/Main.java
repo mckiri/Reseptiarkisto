@@ -10,12 +10,10 @@ import com.mycompany.reseptiarkisto.database.Database;
 import com.mycompany.reseptiarkisto.database.RaakaAineDao;
 import com.mycompany.reseptiarkisto.domain.Annos;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import spark.ModelAndView;
 import spark.Spark;
+import spark.TemplateEngine;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 public class Main{
